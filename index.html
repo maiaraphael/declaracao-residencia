@@ -163,13 +163,13 @@
     }
 
     function gerarDeclaracao() {
-      let nome = document.getElementById('nome').value.trim();
-      let cpf = document.getElementById('cpf').value.trim();
-      let rg = document.getElementById('rg').value.trim();
-      let nacionalidade = document.getElementById('nacionalidade').value.trim();
-      let endereco = document.getElementById('endereco').value.trim();
-      let cep = document.getElementById('cep').value.trim();
-      let cidade = document.getElementById('cidade').value.trim();
+      let nome = document.getElementById('nome').value.trim().toUpperCase();
+      let cpf = document.getElementById('cpf').value.trim().toUpperCase();
+      let rg = document.getElementById('rg').value.trim().toUpperCase();
+      let nacionalidade = document.getElementById('nacionalidade').value.trim().toUpperCase();
+      let endereco = document.getElementById('endereco').value.trim().toUpperCase();
+      let cep = document.getElementById('cep').value.trim().toUpperCase();
+      let cidade = document.getElementById('cidade').value.trim().toUpperCase();
 
       if (!validarCPF(cpf)) {
         alert("CPF inválido. Verifique se contém 11 dígitos.");
