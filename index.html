@@ -110,7 +110,7 @@
 </head>
 <body>
 
-  <img src="https://www.detran.pr.gov.br/sites/detran-pr/themes/portaldetran/logo.png" alt="Logo DETRAN-PR" class="logo">
+  
 
   <h2 style="text-align: center;">Gerador de Declaração de Residência - DETRAN PR</h2>
 
@@ -188,15 +188,17 @@
 
       const texto = `
         <div id="conteudoDeclaracao">
-          <img src="https://www.detran.pr.gov.br/sites/detran-pr/themes/portaldetran/logo.png" alt="Logo DETRAN-PR" class="logo">
+          
           <h3 style="text-align: center;">DECLARAÇÃO DE RESIDÊNCIA</h3>
+          <br>
           <p>Ilmo. Sr. Diretor Geral do DETRAN/PR</p>
+          <br>
           <p>Eu, <strong>${nome}</strong><br>
           Documento de identidade nº <strong>${rg}</strong>, CPF: <strong>${cpf}</strong><br>
           Nacionalidade: <strong>${nacionalidade}</strong></p>
 
           <p>Na ausência de documentos para comprovação de residência, <strong>DECLARO</strong>, para os devidos fins e sob as penas da Lei, ser residente e domiciliado à:</p>
-          <p><strong>${endereco}<br>${cep} ${cidade}</strong></p>
+          <p><strong>${endereco}<br>CEP: ${cep} - ${cidade}</strong></p>
 
           <p>Declaro ainda estar ciente de que a falsidade da presente declaração pode implicar na sanção penal prevista no Art. 299 do Código Penal, conforme transcrição abaixo:</p>
 
@@ -206,6 +208,8 @@
           <p style="margin-top: 30px;">${cidade}, ${dataFormatada}</p>
 
           <div class="assinatura">
+            <br>
+            <br>
             <div class="linha-fake">__________________________________</div>
             <div>Assinatura do Requerente</div>
             <div class="observacao">(A assinatura deverá ter firma reconhecida por verdadeiro, em cartório.)</div>
