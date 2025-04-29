@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Declaração de Residência - DETRAN PR</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f9f9f9;
+      font-size: 16px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #005bac;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    #declaracao {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: white;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    .botao-imprimir {
+      background-color: #007f33;
+      margin-left: 10px;
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      max-width: 200px;
+    }
+    .assinatura {
+      margin-top: 60px;
+      text-align: center;
+    }
+    .linha-assinatura {
+      margin-bottom: 4px;
+      border-bottom: 1px solid #000;
+      width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .observacao {
+      font-size: 14px;
+      color: #444;
+    }
+    @media print {
+      @page {
+        margin: 20mm;
+      }
+      body {
+        margin: 0;
+      }
+      h2, button, input, textarea, label {
+        display: none !important;
+      }
+      #declaracao {
+        border: none;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <img src="https://www.detran.pr.gov.br/sites/detran-pr/themes/portaldetran/logo.png" alt="Logo DETRAN-PR" class="logo">
+
+  <h2 style="text-align: center;">Gerador de Declaração de Residência - DETRAN PR</h2>
+
+  <label for="nome">Nome completo:</label>
+  <input type="text" id="nome">
+
+  <label for="cpf">CPF:</label>
+  <input type="text" id="cpf" placeholder="000.000.000-00">
+
+  <label for="rg">RG:</label>
+  <input type="text" id="rg">
+
+  <label for="nacionalidade">Nacionalidade:</label>
+  <input type="text" id="nacionalidade" placeholder="Brasileira">
+
+  <label for="endereco">Endereço (rua, número):</label>
+  <textarea id="endereco" rows="2"></textarea>
+
+  <label for="cep">CEP:</label>
+  <input type="text" id="cep" placeholder="00000-000">
+
+  <label for="cidade">Cidade/UF:</label>
+  <input type="text" id="cidade">
+
+  <button onclick="gerarDeclaracao()">Gerar Declaração</button>
+  <button class="botao-imprimir" onclick="imprimirDeclaracao()">Imprimir / Salvar PDF</button>
+
+  <div id="declaracao"></div>
+
+  <script>
+    function formatarCPF(cpf) {
+      cpf = cpf.replace(/\D/g, "");
+      return cpf.replace(/(\\d{3})(\\d{3})(\\d{3})(\\d{2})/, "$1.$2.$3-$4");
+    }
+
+    function formatarCEP(cep) {
+      cep = cep.replace(/\D/g, "");
+      return cep.replace(/(\\d{5})(\\d{3})/, "$1-$2");
+    }
+
+    function validarCPF(cpf) {
+      cpf = cpf.replace(/\D/g, "");
+      return cpf.length === 11;
+    }
+
+    function validarCEP(cep) {
+      cep = cep.replace(/\D/g, "");
+      return cep.length === 8;
+    }
+
+    function gerarDeclaracao() {
+      let nome = document.getElementById('nome').value.trim();
+      let cpf = document.getElementById('cpf').value.trim();
+      let rg = document.getElementById('rg').value.trim();
+      let nacionalidade = document.getElementById('nacionalidade').value.trim();
+      let endereco = document.getElementById('endereco').value.trim();
+      let cep = document.getElementById('cep').value.trim();
+      let cidade = document.getElementById('cidade').value.trim();
+
+      if (!validarCPF(cpf)) {
+        alert("CPF inválido. Verifique se contém 11 dígitos.");
+        return;
+      }
+
+      if (!validarCEP(cep)) {
+        alert("CEP inválido. Verifique se contém 8 dígitos.");
+        return;
+      }
+
+      cpf = formatarCPF(cpf);
+      cep = formatarCEP(cep);
+
+      const hoje = new Date();
+      const dataFormatada = hoje.toLocaleDateString('pt-BR');
+
+      const texto = `
+        <div id="conteudoDeclaracao">
+          <img src="https://www.detran.pr.gov.br/sites/detran-pr/themes/portaldetran/logo.png" alt="Logo DETRAN-PR" class="logo">
+          <h3 style="text-align: center;">DECLARAÇÃO DE RESIDÊNCIA</h3>
+          <p>Ilmo. Sr. Diretor Geral do DETRAN/PR</p>
+          <p>Eu, <strong>${nome}</strong><br>
+          Documento de identidade nº <strong>${rg}</strong>, CPF: <strong>${cpf}</strong><br>
+          Nacionalidade: <strong>${nacionalidade}</strong></p>
+
+          <p>Na ausência de documentos para comprovação de residência, <strong>DECLARO</strong>, para os devidos fins e sob as penas da Lei, ser residente e domiciliado à:</p>
+          <p><strong>${endereco}<br>${cep} ${cidade}</strong></p>
+
+          <p>Declaro ainda estar ciente de que a falsidade da presente declaração pode implicar na sanção penal prevista no Art. 299 do Código Penal, conforme transcrição abaixo:</p>
+
+          <p style="font-size: 14px; color: #444;">“Art. 299 - Omitir, em documento público ou particular, declaração que nele deveria constar, ou nele inserir ou fazer inserir declaração falsa ou diversa da que deveria ser escrita, com o fim de prejudicar direito, criar obrigação ou alterar a verdade sobre o fato juridicamente relevante”<br>
+          “Pena: reclusão de 1 (um) a 5 (cinco) anos e multa, se o documento é público e reclusão de 1 (um) a 3 (três) anos, se o documento é particular.”</p>
+
+          <p style="margin-top: 30px;">${cidade}, ${dataFormatada}</p>
+
+          <div class="assinatura">
+            <div class="linha-assinatura"></div>
+            <div>Assinatura do Requerente</div>
+            <div class="observacao">(A assinatura deverá ter firma reconhecida por verdadeiro, em cartório.)</div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('declaracao').innerHTML = texto;
+    }
+
+    function imprimirDeclaracao() {
+      const conteudo = document.getElementById('declaracao').innerHTML;
+      const janela = window.open('', '', 'width=800,height=600');
+      janela.document.write('<html><head><title>Declaração de Residência</title></head><body>');
+      janela.document.write(conteudo);
+      janela.document.write('</body></html>');
+      janela.document.close();
+      janela.print();
+    }
+  </script>
+
+</body>
+</html>
