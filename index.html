@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -46,29 +47,62 @@
       text-align: center;
     }
     .linha-assinatura {
-      margin-bottom: 4px;
       border-bottom: 1px solid #000;
       width: 300px;
-      margin-left: auto;
-      margin-right: auto;
+      height: 1px;
+      margin: 0 auto 4px auto;
     }
     .observacao {
       font-size: 14px;
       color: #444;
+      text-align: center;
+    }
+    #conteudoDeclaracao p {
+      text-align: justify;
     }
     @media print {
       @page {
         margin: 20mm;
       }
+
       body {
         margin: 0;
       }
+
       h2, button, input, textarea, label {
         display: none !important;
       }
+
       #declaracao {
         border: none;
         padding: 0;
+      }
+
+      #conteudoDeclaracao {
+        font-size: 16px;
+        color: #000;
+      }
+
+      .assinatura {
+        text-align: center;
+      }
+
+      .linha-assinatura {
+        display: block;
+        border-bottom: 1px solid #000;
+        height: 1px;
+        width: 300px;
+        margin: 0 auto 4px auto;
+      }
+
+      .observacao {
+        font-size: 12px;
+        color: #000;
+        text-align: center;
+      }
+
+      #conteudoDeclaracao p {
+        text-align: justify;
       }
     }
   </style>
@@ -108,12 +142,12 @@
   <script>
     function formatarCPF(cpf) {
       cpf = cpf.replace(/\D/g, "");
-      return cpf.replace(/(\\d{3})(\\d{3})(\\d{3})(\\d{2})/, "$1.$2.$3-$4");
+      return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
     }
 
     function formatarCEP(cep) {
       cep = cep.replace(/\D/g, "");
-      return cep.replace(/(\\d{5})(\\d{3})/, "$1-$2");
+      return cep.replace(/(\d{5})(\d{3})/, "$1-$2");
     }
 
     function validarCPF(cpf) {
