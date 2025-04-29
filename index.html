@@ -85,22 +85,20 @@
         color: #000;
       }
 
+      .linha-assinatura {
+        font-size: 18px;
+        letter-spacing: 3px;
+        color: black;
+      }
+      
       .assinatura {
         text-align: center;
+        margin-top: 60px;
       }
-
-      .linha-fake {
-        font-size: 18px;
-        text-align: center;
-        color: black;
-        letter-spacing: 3px;
-        margin-bottom: 4px;
-      }
-
+      
       .observacao {
         font-size: 12px;
         color: #000;
-        text-align: center;
       }
 
       #conteudoDeclaracao p {
@@ -208,13 +206,18 @@
           <p style="margin-top: 30px;">${dataFormatada}</p>
 
           <div class="assinatura">
-            <br>
-            <br>
-            <div class="linha-fake">____________________________</div>
-            <div>Assinatura do Requerente</div>
-            <div class="observacao">(A assinatura deverá ter firma reconhecida por verdadeiro, em cartório.)</div>
+            <table style="margin: 0 auto; text-align: center;">
+              <tr>
+                <td><span class="linha-assinatura">___________</span></td>
+              </tr>
+              <tr>
+                <td>Assinatura do Requerente</td>
+              </tr>
+              <tr>
+                <td class="observacao">(A assinatura deverá ter firma reconhecida por verdadeiro, em cartório.)</td>
+              </tr>
+            </table>
           </div>
-        </div>
       `;
 
       document.getElementById('declaracao').innerHTML = texto;
