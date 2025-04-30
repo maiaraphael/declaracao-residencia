@@ -38,6 +38,10 @@
       background-color: #007f33;
       margin-left: 10px;
     }
+    .botao-salvar {
+      background-color: #FFB22C;
+      margin-left: 10px;
+    }
     .logo {
       display: block;
       margin: 0 auto 20px auto;
@@ -106,6 +110,7 @@
       }
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -135,7 +140,8 @@
   <input type="text" id="cidade">
 
   <button onclick="gerarDeclaracao()">Gerar Declaração</button>
-  <button class="botao-imprimir" onclick="imprimirDeclaracao()">Imprimir / Salvar PDF</button>
+  <button class="botao-imprimir" onclick="imprimirDeclaracao()">Imprimir</button>
+  <button class="botao-salvar" onclick="salvarComoPDF()">Salvar como PDF</button>
 
   <div id="declaracao"></div>
 
@@ -231,6 +237,29 @@
       janela.document.write('</body></html>');
       janela.document.close();
       janela.print();
+    }
+
+    async function salvarComoPDF() {
+      const nome = document.getElementById('nome').value.trim().toUpperCase() || 'NOME-NAO-INFORMADO';
+      const docNome = DECLARACAO RESIDÊNCIA - ${nome}.pdf;
+  
+      const conteudo = document.getElementById('declaracao');
+  
+      // Importa jsPDF
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF();
+  
+      // Captura o HTML como string
+      pdf.html(conteudo, {
+        callback: function (doc) {
+          doc.save(docNome);
+        },
+        margin: 10,
+        autoPaging: true,
+        x: 10,
+        y: 10,
+        html2canvas: { scale: 0.7 }
+      });
     }
   </script>
 
